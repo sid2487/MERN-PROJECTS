@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const todoSchema = new mongoose.Schema({
     text: {
@@ -8,7 +8,12 @@ const todoSchema = new mongoose.Schema({
     completed: {
         type: Boolean,
         required: true,
-    }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
 })
 
 const Todo = mongoose.model("Todo", todoSchema);

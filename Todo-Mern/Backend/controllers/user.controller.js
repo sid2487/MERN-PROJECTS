@@ -14,7 +14,7 @@ export const register = async (req, res) => {
         const { email, username, password } = req.body;
 
         if(!email || !username || !password){
-            return res.status(400).json({ message: "All Fields are required" });
+            return res.status(400).json({ errors: "All Fields are required" });
         }
 
         const validation = userSchema.safeParse({ email, username, password })
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
 
         const user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ message: "User already exist" });
+            return res.status(400).json({ errors: "User already exist" });
         }
 
         const hashPassword = await bcrypt.hash(password, 10);
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
 
         const user = await User.findOne({ email }).select("+password")
         if(!user || !(await bcrypt.compare(password, user.password))){
-            return res.status(400).json({ message: "Invalid email or password" });
+            return res.status(400).json({ errors: "Invalid email or password" });
         }
 
         const token = await generateTokenAndSaveInCookie(user._id, res);
