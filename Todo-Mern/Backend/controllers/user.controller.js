@@ -70,7 +70,7 @@ export const logout = (req, res) => {
         res.clearCookie("jwt", {
             path: "/"
         });
-        res.status(200).json({ message: "User logged out successfully" });
+        res.status(200).json({ message: "User logged out Successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error logging out User" });
